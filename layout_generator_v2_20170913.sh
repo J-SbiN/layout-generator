@@ -3,10 +3,27 @@ set -eo pipefail
 
 
 
+if [ $# -eq 0 ]; then
+    echo "This script requires arguments..."
+    show_help
+    exit 1
+fi
+
+
+
+
+
+
 function show_help {
-    echo -e "\n\t\t usage: <layout_generator.sh> <-H /path/to/hosts/file> [-v]\n"
+    echo -e "\n\t\t usage: <layout_generator.sh> [-v] <-H /path/to/hosts/file> \n"
+    echo ""
+    echo -e ""
+
     exit 0
 }
+
+
+
 
 function set_debug {
     set -x
@@ -14,12 +31,11 @@ function set_debug {
 
 
 
-if [ $# -eq 0 ]; then
-    echo "This script requires arguments..."
-    show_help
-    exit 1
-fi
 
+#function validate {
+#    if [] 
+#    fi
+#}
 
 
 
@@ -33,7 +49,7 @@ CONFIGS_FOLDER="/home/jsabino/.config/terminator/configs"
 ETC_HOSTS="/etc/hosts"
 NEW_FILE="config_${DATE}"
 N_SCREENS=2;
-MAX_TPW=10;
+MAX_TPW=20;
 
 HOSTS_FILE=${ETC_HOSTS}
 OUT_DIR=${CONFIGS_FOLDER}
@@ -121,6 +137,7 @@ ALL_PARKS=$(cat ${HOSTS_FILE} | grep -E "${ALL_REGEX}" | sed 's/  */ /g' | cut -
 
 
 ##############
+##    --> exclude lines starting with '#'
 ##    --> find a way to select the parks to connect to
 ##    --> display parks in windows per type?
 ##############
@@ -168,7 +185,7 @@ REM=$((N_ALL%N_WIN))
 
 N_TWX=()
 for X in $(seq 1 1 ${N_WIN})
-do   # está com o problema de encher mais que 20 terminais por janela
+do   # está com o problema de encher mais que 20 terminais por janela no limite 
     if [[ ${X} -le ${REM} ]]
     then
         N_TPW1=$((N_TPW+1))
