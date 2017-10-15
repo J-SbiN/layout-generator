@@ -1,0 +1,504 @@
+[global_config]
+  suppress_multiple_term_dialog = True
+[keybindings]
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+
+  [[all_parks]]
+    [[[child0]]]
+      fullscreen = False
+      last_active_term = 27958201-4201-443e-8ae4-424e982a20e5
+      last_active_window = True
+      maximised = True
+      order = 0
+      parent = ""
+      position = 1920:0
+      size = 1920, 1029
+      title = jsabino@PM-JSabino ~
+      type = Window
+    [[[child1]]]
+      order = 0
+      parent = child0
+      position = 512
+      ratio = 0.500485908649
+      type = VPaned
+    [[[child10]]]
+      order = 1
+      parent = child2
+      position = 957
+      ratio = 0.5
+      type = HPaned
+    [[[child11]]]
+      order = 0
+      parent = child10
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    [[[child14]]]
+      order = 1
+      parent = child10
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    [[[child17]]]
+      order = 1
+      parent = child1
+      position = 253
+      ratio = 0.500978473581
+      type = VPaned
+    [[[child18]]]
+      order = 0
+      parent = child17
+      position = 957
+      ratio = 0.5
+      type = HPaned
+    [[[child19]]]
+      order = 0
+      parent = child18
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    [[[child2]]]
+      order = 0
+      parent = child1
+      position = 253
+      ratio = 0.5
+      type = VPaned
+    [[[child22]]]
+      order = 1
+      parent = child18
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    [[[child25]]]
+      order = 1
+      parent = child17
+      position = 957
+      ratio = 0.5
+      type = HPaned
+    [[[child26]]]
+      order = 0
+      parent = child25
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    [[[child29]]]
+      order = 1
+      parent = child25
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    [[[child3]]]
+      order = 0
+      parent = child2
+      position = 957
+      ratio = 0.5
+      type = HPaned
+    [[[child4]]]
+      order = 0
+      parent = child3
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    [[[child7]]]
+      order = 1
+      parent = child3
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    
+    
+    
+    [[[child_0]]]
+      fullscreen = False
+      last_active_term = 74ed8e45-312b-41de-9071-b0b64e9c0a6f
+      last_active_window = True
+      maximised = True
+      order = 0
+      parent = ""
+      position = 1920:0
+      size = 1920, 1029
+      title = jsabino@PM-JSabino ~
+      type = Window
+    [[[child_1]]]
+      order = 0
+      parent = child_0
+      position = 512
+      ratio = 0.500485908649
+      type = VPaned
+    [[[child_10]]]
+      order = 1
+      parent = child_2
+      position = 957
+      ratio = 0.5
+      type = HPaned
+    [[[child_11]]]
+      order = 0
+      parent = child_10
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    [[[child_14]]]
+      order = 1
+      parent = child_10
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    [[[child_17]]]
+      order = 1
+      parent = child_1
+      position = 253
+      ratio = 0.500978473581
+      type = VPaned
+    [[[child_18]]]
+      order = 0
+      parent = child_17
+      position = 957
+      ratio = 0.5
+      type = HPaned
+    [[[child_19]]]
+      order = 0
+      parent = child_18
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    [[[child_2]]]
+      order = 0
+      parent = child_1
+      position = 253
+      ratio = 0.5
+      type = VPaned
+    [[[child_22]]]
+      order = 1
+      parent = child_18
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    [[[child_25]]]
+      order = 1
+      parent = child_17
+      position = 957
+      ratio = 0.5
+      type = HPaned
+    [[[child_26]]]
+      order = 0
+      parent = child_25
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    [[[child_29]]]
+      order = 1
+      parent = child_25
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    [[[child_3]]]
+      order = 0
+      parent = child_2
+      position = 957
+      ratio = 0.5
+      type = HPaned
+    [[[child_4]]]
+      order = 0
+      parent = child_3
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    [[[child_7]]]
+      order = 1
+      parent = child_3
+      position = 474
+      ratio = 0.498432601881
+      type = HPaned
+    
+    [[[terminal12]]]
+      command = ssh pm@majadahonda
+      group = Beta
+      order = 0
+      parent = child11
+      profile = park
+      type = Terminal
+      uuid = 01df00de-c6f5-4f09-bc1b-8922c6f7471e
+    [[[terminal13]]]
+      command = ssh pm@palencia
+      group = Beta
+      order = 1
+      parent = child11
+      profile = park
+      type = Terminal
+      uuid = 27958201-4201-443e-8ae4-424e982a20e5
+    
+    [[[terminal15]]]
+      command = ssh pm@jardinillos
+      group = Beta
+      order = 0
+      parent = child14
+      profile = park
+      type = Terminal
+      uuid = d5570041-a5da-46fc-a4b6-b8bfadbf991d
+    [[[terminal16]]]
+      command = ssh pm@ramblanova
+      group = Beta
+      order = 1
+      parent = child14
+      profile = default
+      type = Terminal
+      uuid = feeb4e70-d65c-4b3f-8d5d-f6dd35bb6e79
+    
+    [[[terminal20]]]
+      command = ssh pm@ciudadreal
+      group = Beta
+      order = 0
+      parent = child19
+      profile = park
+      type = Terminal
+      uuid = f4b184c1-22c6-4057-923b-aeeeb9b01bfb
+    [[[terminal21]]]
+      command = ssh pm@oestparcent
+      group = Beta
+      order = 1
+      parent = child19
+      profile = park
+      type = Terminal
+      uuid = fadffa70-5c3a-486c-bf0a-f14635a29a3f
+    
+    [[[terminal23]]]
+      command = ssh pm@regne
+      group = Beta
+      order = 0
+      parent = child22
+      profile = park
+      type = Terminal
+      uuid = a1007813-f9e1-4ae4-a06b-69cedf2920e4
+    [[[terminal24]]]
+      command = ssh pm@ruzafa
+      group = Beta
+      order = 1
+      parent = child22
+      profile = park
+      type = Terminal
+      uuid = f3df77ef-89d1-4f6b-96a4-1575dbf83810
+    
+    [[[terminal27]]]
+      command = ssh pm@elbaluarte
+      group = Beta
+      order = 0
+      parent = child26
+      profile = park
+      type = Terminal
+      uuid = 46bc8165-a79a-4a6d-ba04-ab933c27e914
+    [[[terminal28]]]
+      command = ssh pm@blanca
+      group = Beta
+      order = 1
+      parent = child26
+      profile = park
+      type = Terminal
+      uuid = d7a8dd75-cef4-43a5-9099-45c09eaf9538
+    
+    [[[terminal30]]]
+      command = ssh pm@lapedrera
+      group = Beta
+      order = 0
+      parent = child29
+      profile = park
+      type = Terminal
+      uuid = 908f5b9e-40cd-46ab-be11-b50c6f71c267
+    [[[terminal31]]]
+      command = ssh pm@fuencarral
+      group = Beta
+      order = 1
+      parent = child29
+      profile = park
+      type = Terminal
+      uuid = 74ed8e45-312b-41de-9071-b0b64e9c0a6e
+    
+    
+    
+    [[[terminal5]]]
+      command = ssh pm@pinar
+      group = Beta
+      order = 0
+      parent = child4
+      profile = park
+      type = Terminal
+      uuid = 49cb5213-5837-4038-88cc-a419eec44f2f
+    [[[terminal6]]]
+      command = ssh pm@lasrozas
+      group = Beta
+      order = 1
+      parent = child4
+      profile = park
+      type = Terminal
+      uuid = 040015b9-c5f4-4fcb-b674-bc737673daa6
+    
+    [[[terminal8]]]
+      command = ssh pm@lasmatas
+      group = Beta
+      order = 0
+      parent = child7
+      profile = park
+      type = Terminal
+      uuid = 0e10cca1-af44-4f2c-8949-dbd010c8d157
+    [[[terminal9]]]
+      command = ssh pm@barrial
+      group = Beta
+      order = 1
+      parent = child7
+      profile = park
+      type = Terminal
+      uuid = cbf974bd-4214-4cb5-a28a-a034630bd0bd
+    
+    [[[terminal_12]]]
+      command = ssh pm@concepcion
+      group = Beta
+      order = 0
+      parent = child_11
+      profile = park
+      type = Terminal
+      uuid = 01df00de-c6f5-4f09-bc1b-8922c6f7471f
+    [[[terminal_13]]]
+      command = ssh pm@serrano
+      group = Beta
+      order = 1
+      parent = child_11
+      profile = park
+      type = Terminal
+      uuid = 27958201-4201-443e-8ae4-424e982a20e6
+    
+    [[[terminal_15]]]
+      command = ssh pm@ramonycajal
+      group = Beta
+      order = 0
+      parent = child_14
+      profile = park
+      type = Terminal
+      uuid = d5570041-a5da-46fc-a4b6-b8bfadbf991e
+    [[[terminal_16]]]
+      command = ssh pm@centrohospitalario
+      group = Beta
+      order = 1
+      parent = child_14
+      profile = park
+      type = Terminal
+      uuid = feeb4e70-d65c-4b3f-8d5d-f6dd35bb6e80
+    
+    [[[terminal_20]]]
+      command = ssh pm@atocha
+      group = Beta
+      order = 0
+      parent = child_19
+      profile = park
+      type = Terminal
+      uuid = f4b184c1-22c6-4057-923b-aeeeb9b01bfc
+    [[[terminal_21]]]
+      command = ssh pm@laconcha
+      group = Beta
+      order = 1
+      parent = child_19
+      profile = park
+      type = Terminal
+      uuid = fadffa70-5c3a-486c-bf0a-f14635a29a40
+    
+    [[[terminal_23]]]
+      command = ssh pm@pzcataluna
+      group = Beta
+      order = 0
+      parent = child_22
+      profile = park
+      type = Terminal
+      uuid = a1007813-f9e1-4ae4-a06b-69cedf2920e5
+    [[[terminal_24]]]
+      command = ssh pm@okendo
+      group = Beta
+      order = 1
+      parent = child_22
+      profile = park
+      type = Terminal
+      uuid = f3df77ef-89d1-4f6b-96a4-1575dbf83811
+    
+    [[[terminal_27]]]
+      command = ssh pm@sanjuan
+      group = Beta
+      order = 0
+      parent = child_26
+      profile = park
+      type = Terminal
+      uuid = 46bc8165-a79a-4a6d-ba04-ab933c27e915
+    [[[terminal_28]]]
+      command = ssh pm@alhondiga
+      group = Beta
+      order = 1
+      parent = child_26
+      profile = default
+      type = Terminal
+      uuid = d7a8dd75-cef4-43a5-9099-45c09eaf9539
+    
+    [[[terminal_30]]]
+      command = ssh pm@casino
+      group = Beta
+      order = 0
+      parent = child_29
+      profile = park
+      type = Terminal
+      uuid = 908f5b9e-40cd-46ab-be11-b50c6f71c268
+    [[[terminal_31]]]
+      command = ssh pm@elgrande
+      group = Beta
+      order = 1
+      parent = child_29
+      profile = park
+      type = Terminal
+      uuid = 74ed8e45-312b-41de-9071-b0b64e9c0a6f
+    
+    
+    
+    [[[terminal_5]]]
+      command = ssh pm@colon
+      group = Beta
+      order = 0
+      parent = child_4
+      profile = park
+      type = Terminal
+      uuid = 49cb5213-5837-4038-88cc-a419eec44f30
+    [[[terminal_6]]]
+      command = ssh pm@lascortes
+      group = Beta
+      order = 1
+      parent = child_4
+      profile = park
+      type = Terminal
+      uuid = 040015b9-c5f4-4fcb-b674-bc737673daa7
+    
+    [[[terminal_8]]]
+      command = ssh pm@pmayormadrid
+      group = Beta
+      order = 0
+      parent = child_7
+      profile = park
+      type = Terminal
+      uuid = 0e10cca1-af44-4f2c-8949-dbd010c8d158
+    [[[terminal_9]]]
+      command = ssh pm@pespana
+      group = Beta
+      order = 1
+      parent = child_7
+      profile = park
+      type = Terminal
+      uuid = cbf974bd-4214-4cb5-a28a-a034630bd0be
+
+[plugins]
+[profiles]
+  [[default]]
+    background_darkness = 0.9
+    background_image = None
+    background_type = transparent
+    scrollback_infinite = True
+  [[park]]
+    background_image = None

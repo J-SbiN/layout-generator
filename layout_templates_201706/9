@@ -1,0 +1,133 @@
+[[9]]
+    [[[child0]]]
+      fullscreen = False
+      last_active_term = 907296f9-6c5f-4405-b977-b080b2625c76
+      last_active_window = True
+      maximised = True
+      order = 0
+      parent = ""
+      position = 1920:0
+      size = 1920, 1029
+      title = jsabino@PM-JSabino ~
+      type = Window
+    [[[child1]]]
+      order = 0
+      parent = child0
+      position = 346
+      ratio = 0.339164237123
+      type = VPaned
+            [[[child2]]]
+              order = 0
+              parent = child1
+              position = 635
+              ratio = 0.332291666667
+              type = HPaned
+                    [[[child4]]]
+                      order = 1
+                      parent = child2
+                      position = 635
+                      ratio = 0.498827208757
+                      type = HPaned
+            [[[child7]]]
+              order = 1
+              parent = child1
+              position = 362
+              ratio = 0.539143279173
+              type = VPaned
+                    [[[child8]]]
+                      order = 0
+                      parent = child7
+                      position = 634
+                      ratio = 0.331770833333
+                      type = HPaned
+                            [[[child10]]]
+                              order = 1
+                              parent = child8
+                              position = 638
+                              ratio = 0.50078125
+                              type = HPaned
+                    [[[child13]]]
+                      order = 1
+                      parent = child7
+                      position = 633
+                      ratio = 0.33125
+                      type = HPaned
+                            [[[child15]]]
+                              order = 1
+                              parent = child13
+                              position = 639
+                              ratio = 0.501170960187
+                              type = HPaned
+
+
+
+
+    [[[terminal3]]]
+      group = Psi
+      order = 0
+      parent = child2
+      profile = default
+      type = Terminal
+      uuid = 907296f9-6c5f-4405-b977-b080b2625c76
+
+    [[[terminal5]]]
+      group = Psi
+      order = 0
+      parent = child4
+      profile = default
+      type = Terminal
+      uuid = 2c3ade6d-ffa1-4229-9c95-82802f71b0f2
+    [[[terminal6]]]
+      group = Psi
+      order = 1
+      parent = child4
+      profile = default
+      type = Terminal
+      uuid = 00aab02e-f2a6-47d7-b27e-672e52d1f477
+
+    [[[terminal9]]]
+      group = Psi
+      order = 0
+      parent = child8
+      profile = default
+      type = Terminal
+      uuid = 335c68f6-f45d-4aa3-80ce-0bbf9386e76d
+
+    [[[terminal11]]]
+      group = Psi
+      order = 0
+      parent = child10
+      profile = default
+      type = Terminal
+      uuid = b1f61db0-b8d9-4be5-b40e-15ac46a324e2
+    [[[terminal12]]]
+      group = Psi
+      order = 1
+      parent = child10
+      profile = default
+      type = Terminal
+      uuid = 366c7472-9562-4a86-825f-509189b80f31
+
+    [[[terminal14]]]
+      group = Psi
+      order = 0
+      parent = child13
+      profile = default
+      type = Terminal
+      uuid = d63c2b6b-b8d3-47c9-a7c9-46e33bde1674
+
+    [[[terminal16]]]
+      group = Psi
+      order = 0
+      parent = child15
+      profile = default
+      type = Terminal
+      uuid = 3cfed6ff-db29-44aa-a101-8c2d54c474d3
+    [[[terminal17]]]
+      group = Psi
+      order = 1
+      parent = child15
+      profile = default
+      type = Terminal
+      uuid = bcc60327-0790-4d96-be43-82be14f0a425
+    
