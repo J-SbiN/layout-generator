@@ -23,16 +23,22 @@ fi
 
 
 
+
+
+
+
+
 #######################
 #   Default Values
 #######################
 #----------------------------------------------------------------------------------------------------------------------
 DATE=$(date +%Y%m%d_%H%M%S)
+BIN_DIR="$(readlink -f $(dirname ${BASH_SOURCE[0]}))"
 
 CONFIGS_FOLDER="/home/jsabino/.config/terminator/configs"
 ETC_HOSTS="/etc/hosts"
 NEW_FILE="config_${DATE}"
-N_SCREENS=3
+N_SCREENS=2
 MAX_TPW=20
 
 HOSTS_FILE=${ETC_HOSTS}
@@ -40,6 +46,35 @@ OUT_DIR=${CONFIGS_FOLDER}
 #----------------------------------------------------------------------------------------------------------------------
 #   Default Values
 #######################
+
+
+
+
+
+
+
+
+function round_up () {
+
+      case $((${1})) in
+          1 )  X=1 ;;
+          2 )  X=2 ;;
+          3 )  X=3 ;;
+          4 )  X=4 ;;
+          5|6 )  X=6 ;;
+          7|8 )  X=8 ;;
+          9 )  X=9 ;;
+          10|11|12  )  X=12 ;;
+          13|14|15|16 )  X=16 ;;
+          17|18|19|20 )  X=20 ;;
+          * ) echo "Thats a too high or unexpected value."; exit 0  ;;
+      esac
+      echo ${X}
+}
+
+
+
+
 
 
 
@@ -111,6 +146,7 @@ done
 
 
 
+
 #######################
 #   Recepção de hosts
 #######################
@@ -137,6 +173,10 @@ ALL_PARKS=$(echo -e "${CERCANIAS}\n${SAGA}\n${TOTEM}\n${SKIDATA}" ) # | sed '/^\
 
 
 
+
+
+
+
 ############################
 #   Distribuição por ecrãs
 ############################
@@ -151,16 +191,18 @@ do
     #[ $((N_ALL%N_WIN)) -eq 0 ]
     N_TPW=$((N_ALL/N_WIN +1))
 done
-
-#if [ ${N_WIN} == 1 ] && [[ ${N_TPW} -gt 4 ]]
-#then
-#    N_WIN="${N_SCREENS}"
-#    { [ $((N_ALL%2)) -eq 0 ]   &&   { N_T1=$((N_ALL/2)); N_T2=$((N_T1)); } }  ||  { N_T2=$((N_ALL/2)); N_T1=$((N_T2+1)); } 
-#fi
-
+N_BLANKS=$(round_up ${N_TPW})
 #----------------------------------------------------------------------------------------------------------------------
 #   Distribuição por ecrãs
 ############################
+
+
+echo "${N_ALL}"
+echo "$N_WIN windows      $N_TPW terminals/window      $N_BLANKS terminal-spots/window"
+#echo "$N_T1 - w1    $N_T2 - w2 "
+
+
+
 
 
 
@@ -171,16 +213,64 @@ done
 #   Gerador de layouts
 ############################
 #----------------------------------------------------------------------------------------------------------------------
+#BASE_FILE="/dev/null"
+BASE_FILE="${BIN_DIR}/generated_layouts/base"
 
 
+# Inicial header
+cat << EOF > "${BASE_FILE}"
+[global_config]
+  suppress_multiple_term_dialog = True
+[keybindings]
+[plugins]
+[profiles]
+  [[default]]
+    background_darkness = 0.9
+    background_image = None
+    background_type = transparent
+    scrollback_infinite = True
+  [[park]]
+    background_image = None
+    scrollback_infinite = True
+[layouts]
+EOF
+
+ADD=""
+for X in $(seq 1 1 ${N_WIN})
+do
+cat "${BIN_DIR}/layout_templates/${N_BLANKS}" | sed -r 's/(child)([0-9]+)/\1'${ADD}'\2/g' | sed -r 's/(terminal)([0-9]+)/\1'${ADD}'\2/g'  >>  ${BASE_FILE}
+    ADD+="_"
+done
 #----------------------------------------------------------------------------------------------------------------------
+#   Gerador de layouts
+############################
 
 
-echo "${N_ALL}"
 
-echo "$N_WIN windows    $N_TPW terminals/window"
 
-echo "$N_T1 - w1    $N_T2 - w2 "
+
+#cat << EOF > "${BASE_FILE}"
+#    [[[child${ADD}0]]]
+#      fullscreen = False
+#      last_active_window = True
+#      maximised = True
+#      order = 0
+#      parent = ""
+#      position = 1920:0
+#      size = 1920, 1029
+#      title = 
+#      type = Window
+#EOF
+#
+#    for (( c=1; c<=${N_TPW}; c++ )) #  nr de term na janela <= q nr de term por janela
+#    do
+#        echo "$X  $c"
+#    done
+
+
+
+
+
 
 
 
@@ -189,32 +279,6 @@ echo "$N_T1 - w1    $N_T2 - w2 "
 
 
 
-
-
-
-#cat << EOF > "${CONFIGS_FOLDER}"/"${NEW_FILE}"
-#[global_config]
-#  suppress_multiple_term_dialog = True
-#[keybindings]
-#[layouts]
-#  [[default]]
-#    [[[child1]]]
-#      parent = window0
-#      type = Terminal
-#    [[[window0]]]
-#      parent = ""
-#      type = Window
-#[plugins]
-#[profiles]
-#  [[default]]
-#    background_darkness = 0.9
-#    background_image = None
-#    background_type = transparent
-#    scrollback_infinite = True
-#  [[park]]
-#    background_image = None
-#    scrollback_infinite = True
-#EOF
 
 
 
