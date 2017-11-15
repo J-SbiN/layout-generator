@@ -32,7 +32,8 @@ DATE=$(date +%Y%m%d_%H%M%S)
 CONFIGS_FOLDER="/home/jsabino/.config/terminator/configs"
 ETC_HOSTS="/etc/hosts"
 NEW_FILE="config_${DATE}"
-N_SCREENS=2;
+N_SCREENS=3
+MAX_TPW=20
 
 HOSTS_FILE=${ETC_HOSTS}
 OUT_DIR=${CONFIGS_FOLDER}
@@ -120,11 +121,12 @@ CERCA_REGEX=' cerca$'
 SAGA_REGEX=' saga$'
 TOTEM_REGEX=' totem$'
 SKI_REGEX=' skidata$'
+COMMENT_LINE='^#'
 
-CERCANIAS=$(cat ${HOSTS_FILE} | grep -E ${CERCA_REGEX} | sed 's/  */ /g' | cut -d' ' -f2)  || echo "" > /dev/null
-SAGA=$(cat ${HOSTS_FILE} | grep -E ${SAGA_REGEX} | sed 's/  */ /g' | cut -d' ' -f2)  || echo "" > /dev/null
-TOTEM=$(cat ${HOSTS_FILE} | grep -E ${TOTEM_REGEX} | sed 's/  */ /g' | cut -d' ' -f2)  || echo "" > /dev/null
-SKIDATA=$(cat ${HOSTS_FILE} | grep -E ${SKI_REGEX} | sed 's/  */ /g' | cut -d' ' -f2)  || echo "" > /dev/null
+CERCANIAS=$(cat ${HOSTS_FILE} | grep -E ${CERCA_REGEX} | grep -Ev ${COMMENT_LINE} | sed 's/  */ /g' | cut -d' ' -f2)  || echo "" > /dev/null
+SAGA=$(cat ${HOSTS_FILE} | grep -E ${SAGA_REGEX} | grep -Ev ${COMMENT_LINE} | sed 's/  */ /g' | cut -d' ' -f2)  || echo "" > /dev/null
+TOTEM=$(cat ${HOSTS_FILE} | grep -E ${TOTEM_REGEX} | grep -Ev ${COMMENT_LINE} | sed 's/  */ /g' | cut -d' ' -f2)  || echo "" > /dev/null
+SKIDATA=$(cat ${HOSTS_FILE} | grep -E ${SKI_REGEX} | grep -Ev ${COMMENT_LINE} | sed 's/  */ /g' | cut -d' ' -f2)  || echo "" > /dev/null
 
 ALL_PARKS=$(echo -e "${CERCANIAS}\n${SAGA}\n${TOTEM}\n${SKIDATA}" ) # | sed '/^\s*$/d')
 #----------------------------------------------------------------------------------------------------------------------
@@ -143,18 +145,18 @@ N_ALL=$(echo "${ALL_PARKS}" | wc -l)
 N_TPW=${N_ALL}
 
 N_WIN=1
-while [ ${N_TPW} -gt 20 ]
+while [ ${N_TPW} -gt ${MAX_TPW} ]   ||   [ ${N_WIN} -lt ${N_SCREENS}  ]
 do
     N_WIN=$((N_WIN+1))
     #[ $((N_ALL%N_WIN)) -eq 0 ]
     N_TPW=$((N_ALL/N_WIN +1))
 done
 
-if [ ${N_WIN} == 1 ] && [[ ${N_TPW} -gt 4 ]]
-then
-    N_WIN="${N_SCREENS}"
-    { [ $((N_ALL%2)) -eq 0 ]   &&   { N_T1=$((N_ALL/2)); N_T2=$((N_T1)); } }  ||  { N_T2=$((N_ALL/2)); N_T1=$((N_T2+1)); } 
-fi
+#if [ ${N_WIN} == 1 ] && [[ ${N_TPW} -gt 4 ]]
+#then
+#    N_WIN="${N_SCREENS}"
+#    { [ $((N_ALL%2)) -eq 0 ]   &&   { N_T1=$((N_ALL/2)); N_T2=$((N_T1)); } }  ||  { N_T2=$((N_ALL/2)); N_T1=$((N_T2+1)); } 
+#fi
 
 #----------------------------------------------------------------------------------------------------------------------
 #   Distribuição por ecrãs
@@ -236,6 +238,11 @@ echo "$N_T1 - w1    $N_T2 - w2 "
 
 
 
+
+###  PS1 do MONIT
+# \[\e]0;\u@\h: \w\a\]\[\e]0; EmparkMinit - \u@\h: \w\a\][\[\e[1;34m\]\u@\H\[\e[1;33m\] -- [ emp-monit01 ] - Empark Graylog 01 Server -- \[\e[0m\] \w]\n\$
+
+#  ssh -t pm@sanfrancesc "bash --rcfile ~/bashrc_custom -i"
 
 
 
