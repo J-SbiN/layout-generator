@@ -38,11 +38,11 @@ BIN_DIR="$(readlink -f $(dirname ${BASH_SOURCE[0]}))"
 CONFIGS_FOLDER="/home/jsabino/.config/terminator/configs"
 ETC_HOSTS="/etc/hosts"
 NEW_FILE="config_${DATE}"
-N_SCREENS=2
-MAX_TPW=20
+N_SCREENS=2     # to become an option
+MAX_TPW=20      
 
-HOSTS_FILE=${ETC_HOSTS}
-OUT_DIR=${CONFIGS_FOLDER}
+HOSTS_FILE=${ETC_HOSTS}      # to become an option
+OUT_DIR=${CONFIGS_FOLDER}    # to become an option
 #----------------------------------------------------------------------------------------------------------------------
 #   Default Values
 #######################
@@ -182,26 +182,28 @@ ALL_PARKS=$(echo -e "${CERCANIAS}\n${SAGA}\n${TOTEM}\n${SKIDATA}" ) # | sed '/^\
 ############################
 #----------------------------------------------------------------------------------------------------------------------
 N_ALL=$(echo "${ALL_PARKS}" | wc -l)
-N_TPW=${N_ALL}
 
-N_WIN=1
+N_TPW=${N_ALL}
+N_WIN=0
 while [ ${N_TPW} -gt ${MAX_TPW} ]   ||   [ ${N_WIN} -lt ${N_SCREENS}  ]
 do
     N_WIN=$((N_WIN+1))
-    #[ $((N_ALL%N_WIN)) -eq 0 ]
-    N_TPW=$((N_ALL/N_WIN +1))
+    N_TPW=$((N_ALL/N_WIN))
+    [ $((N_ALL%N_WIN)) -eq 0 ]  ||  N_TPW=$((N_TPW+1))
 done
-N_BLANKS=$(round_up ${N_TPW})
+
+N_SPW=$(round_up ${N_TPW})
 #----------------------------------------------------------------------------------------------------------------------
 #   Distribuição por ecrãs
 ############################
 
 
-echo "${N_ALL}"
-echo "$N_WIN windows      $N_TPW terminals/window      $N_BLANKS terminal-spots/window"
+echo "${N_ALL} hosts"
+echo "$N_WIN windows      $N_TPW terminal/window    ${N_SPW}  terminal-spots/window"
 #echo "$N_T1 - w1    $N_T2 - w2 "
 
 
+exit 0 
 
 
 
@@ -223,8 +225,9 @@ cat "${FILE_HEADER}" > "${BASE_FILE}"
 ADD=""
 for X in $(seq 1 1 ${N_WIN})
 do
-cat "${BIN_DIR}/layout_templates/${N_BLANKS}" | sed -r 's/(child)([0-9]+)/\1'${ADD}'\2/g' | sed -r 's/(terminal)([0-9]+)/\1'${ADD}'\2/g'  >>  ${BASE_FILE}
-    ADD+="_"
+        #BASE_N="${BASE_FILE}_${X}"
+        cat "${BIN_DIR}/layout_templates/${N_BLANKS}" | sed -r 's/(child)([0-9]+)/\1'${ADD}'\2/g' | sed -r 's/(terminal)([0-9]+)/\1'${ADD}'\2/g'  >>  ${BASE_FILE}
+        ADD+="_"
 done
 
 #----------------------------------------------------------------------------------------------------------------------
@@ -235,23 +238,6 @@ done
 
 
 
-#cat << EOF > "${BASE_FILE}"
-#    [[[child${ADD}0]]]
-#      fullscreen = False
-#      last_active_window = True
-#      maximised = True
-#      order = 0
-#      parent = ""
-#      position = 1920:0
-#      size = 1920, 1029
-#      title = 
-#      type = Window
-#EOF
-#
-#    for (( c=1; c<=${N_TPW}; c++ )) #  nr de term na janela <= q nr de term por janela
-#    do
-#        echo "$X  $c"
-#    done
 
 
 
@@ -259,20 +245,20 @@ done
 
 
 
-
-#[ $((N_ALL%2)) -eq 0 ]   &&   { N1=$((N_ALL/2)); N2=$((N1)); }  ||  { N1=$((N_ALL/2)); N2=$((N1+1)); }
-#echo "${N1}  ${N2}"
-
-
-
+############################
+#   Atribuir Comandos
+############################
+#----------------------------------------------------------------------------------------------------------------------
 
 
 
+#----------------------------------------------------------------------------------------------------------------------
+#   Atribuir Comandos
+############################
 
 
-
-
-
+#cp "${GROUPS_FILE}" "${GROUPS_FILE}.old_${DATE}"
+#sed -i "/^ *hostgroup_name *${PK_TYPE}$/{n;{n;s/$/,${PK_NAME}/}}" "${GROUPS_FILE}"
 
 
 
@@ -286,9 +272,6 @@ done
 #  ssh -t pm@sanfrancesc "bash --rcfile ~/bashrc_custom -i"
 
 
-
-
-
 ###  PS1 do MONIT
 # \[\e]0;\u@\h: \w\a\]\[\e]0; EmparkMinit - \u@\h: \w\a\][\[\e[1;34m\]\u@\H\[\e[1;33m\] -- [ emp-monit01 ] - Empark Graylog 01 Server -- \[\e[0m\] \w]\n\$
 
@@ -298,6 +281,34 @@ done
 
 
 
+
+
+
+
+
+
+
+###############################
+#   Switch terminator config
+################################
+#
+#DIRECTORY="/home/jsabino/.config/terminator"
+#ORIG_FILE="config"
+#SAFE_FILE="config.temp.bak"
+#
+#
+#X=$1
+#
+#cp  "${DIRECTORY}"/"${ORIG_FILE}" "${DIRECTORY}"/"${SAFE_FILE}"
+#
+#echo "bué da cenas" > "${DIRECTORY}"/"${ORIG_FILE}"
+#
+#terminator -l ${X}
+#
+#cp "${DIRECTORY}"/"${SAFE_FILE}" "${DIRECTORY}"/"${ORIG_FILE}"
+#
+#rm "${DIRECTORY}"/"${SAFE_FILE}"
+#
 
 
 
