@@ -55,7 +55,6 @@ OUT_DIR=${CONFIGS_FOLDER}    # to become an option
 
 
 function round_up () {
-
       case $((${1})) in
           1 )  X=1 ;;
           2 )  X=2 ;;
@@ -151,7 +150,8 @@ function round_up () {
 #   Recepção de hosts
 #######################
 #----------------------------------------------------------------------------------------------------------------------
-echo -e "Host file is:\t${HOSTS_FILE}"
+echo -e "\n\n***  Getting Hosts  ***"
+echo    "Host file is:   ${HOSTS_FILE}"
 
 CERCA_REGEX=' cerca$'
 SAGA_REGEX=' saga$'
@@ -165,6 +165,9 @@ TOTEM=$(cat ${HOSTS_FILE} | grep -E ${TOTEM_REGEX} | grep -Ev ${COMMENT_LINE} | 
 SKIDATA=$(cat ${HOSTS_FILE} | grep -E ${SKI_REGEX} | grep -Ev ${COMMENT_LINE} | sed 's/  */ /g' | cut -d' ' -f2)  || echo "" > /dev/null
 
 ALL_PARKS=$(echo -e "${CERCANIAS}\n${SAGA}\n${TOTEM}\n${SKIDATA}" ) # | sed '/^\s*$/d')
+
+N_ALL=$(echo "${ALL_PARKS}" | wc -l)
+echo "Hosts Found:   ${N_ALL}"
 #----------------------------------------------------------------------------------------------------------------------
 #   Recepção de hosts
 #######################
@@ -181,7 +184,7 @@ ALL_PARKS=$(echo -e "${CERCANIAS}\n${SAGA}\n${TOTEM}\n${SKIDATA}" ) # | sed '/^\
 #   Distribuição por ecrãs
 ############################
 #----------------------------------------------------------------------------------------------------------------------
-N_ALL=$(echo "${ALL_PARKS}" | wc -l)
+echo -e "\n\n***  Distributing terminals  ***"
 
 N_TPW=${N_ALL}
 N_WIN=0
@@ -197,17 +200,40 @@ N_SPW=$(round_up ${N_TPW})
 #   Distribuição por ecrãs
 ############################
 
-
-echo "${N_ALL} hosts"
+echo ""
 echo "$N_WIN windows      $N_TPW terminal/window    ${N_SPW}  terminal-spots/window"
-#echo "$N_T1 - w1    $N_T2 - w2 "
-
-
-exit 0 
 
 
 
 
+
+
+############################
+#   Fill Window Spots
+############################
+#----------------------------------------------------------------------------------------------------------------------
+echo -e "\n\n***  Filling Windows Spots  ***"
+BASE_FILE="${BIN_DIR}/generated_layouts/base"
+
+for X in $(seq 1 1 ${N_WIN})
+do
+    echo -e "\nWin $X"
+    WIN_FILE="${BASE_FILE}_${X}"
+    cat "${BIN_DIR}/layout_templates/${N_SPW}" | sed -r 's/(child)([0-9]+)/\1'${ADD}'\2/g' | sed -r 's/(terminal)([0-9]+)/\1'${ADD}'\2/g'  >  ${WIN_FILE}
+
+    for Y in $( seq $((N_TPW*X)) 1 $(( N_TPW*(X+1) )) )
+    do
+        echo "$Y"
+    done
+done
+#----------------------------------------------------------------------------------------------------------------------
+#   Fill Window Spots
+############################
+
+
+
+
+exit 0
 
 
 
