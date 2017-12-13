@@ -84,56 +84,56 @@ function round_up () {
 #   MENU
 ################
 #----------------------------------------------------------------------------------------------------------------------
-while :
-do
-    case $1 in
-        -h|-\?|--help)
-            show_help
-            exit
-            ;;
-        -v|--verbose|--debug)
-            set_debug
-            ;;
-        -H|--hosts-file)
-            if [ -n "$2" ]; then
-                HOSTS_FILE=$2
-                shift
-            else
-                echo -e "ERROR: '${1}' requires a non-empty option argument.\n"
-                exit 1
-            fi
-            ;;
-        --hosts-file=?*)
-            HOSTS_FILE=${1#*=} # Delete everything up to "=" and assign the remainder.
-            ;;
-        -o|--out-dir)
-            if [ -n "$2" ]; then
-                OUT_DIR=$2
-                shift
-            else
-                printf 'ERROR: "--out-dir" requires a non-empty option argument.\n' >&2
-                exit 1
-            fi
-            ;;
-        --out-dir=?*)
-            OUT_DIR=${1#*=} # Delete everything up to "=" and assign the remainder.
-            ;;
-        --hosts-file=|--out-dir=)
-            echo "ERROR: '${1}' requires a non-empty option argument.\n"
-            exit 1
-            ;;
-        --)   # End of all options.
+        while :
+        do
+            case $1 in
+                -h|-\?|--help)
+                    show_help
+                    exit
+                    ;;
+                -v|--verbose|--debug)
+                    set_debug
+                    ;;
+                -H|--hosts-file)
+                    if [ -n "$2" ]; then
+                        HOSTS_FILE=$2
+                        shift
+                    else
+                        echo -e "ERROR: '${1}' requires a non-empty option argument.\n"
+                        exit 1
+                    fi
+                    ;;
+                --hosts-file=?*)
+                    HOSTS_FILE=${1#*=} # Delete everything up to "=" and assign the remainder.
+                    ;;
+                -o|--out-dir)
+                    if [ -n "$2" ]; then
+                        OUT_DIR=$2
+                        shift
+                    else
+                        printf 'ERROR: "--out-dir" requires a non-empty option argument.\n' >&2
+                        exit 1
+                    fi
+                    ;;
+                --out-dir=?*)
+                    OUT_DIR=${1#*=} # Delete everything up to "=" and assign the remainder.
+                    ;;
+                --hosts-file=|--out-dir=)
+                    echo "ERROR: '${1}' requires a non-empty option argument.\n"
+                    exit 1
+                    ;;
+                --)   # End of all options.
+                    shift
+                    break
+                    ;;
+                -?*)
+                    printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2
+                    ;;
+                *)               # Default case: If no more options then break out of the loop.
+                    break
+            esac
             shift
-            break
-            ;;
-        -?*)
-            printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2
-            ;;
-        *)               # Default case: If no more options then break out of the loop.
-            break
-    esac
-    shift
-done
+        done
 #----------------------------------------------------------------------------------------------------------------------
 #   MENU
 ################
@@ -215,25 +215,10 @@ echo "$N_WIN windows      $N_TPW terminals/window      $N_BLANKS terminal-spots/
 #----------------------------------------------------------------------------------------------------------------------
 #BASE_FILE="/dev/null"
 BASE_FILE="${BIN_DIR}/generated_layouts/base"
-
+FILE_HEADER="${BIN_DIR}/layout_templates/header"
 
 # Inicial header
-cat << EOF > "${BASE_FILE}"
-[global_config]
-  suppress_multiple_term_dialog = True
-[keybindings]
-[plugins]
-[profiles]
-  [[default]]
-    background_darkness = 0.9
-    background_image = None
-    background_type = transparent
-    scrollback_infinite = True
-  [[park]]
-    background_image = None
-    scrollback_infinite = True
-[layouts]
-EOF
+cat "${FILE_HEADER}" > "${BASE_FILE}"
 
 ADD=""
 for X in $(seq 1 1 ${N_WIN})
@@ -241,6 +226,7 @@ do
 cat "${BIN_DIR}/layout_templates/${N_BLANKS}" | sed -r 's/(child)([0-9]+)/\1'${ADD}'\2/g' | sed -r 's/(terminal)([0-9]+)/\1'${ADD}'\2/g'  >>  ${BASE_FILE}
     ADD+="_"
 done
+
 #----------------------------------------------------------------------------------------------------------------------
 #   Gerador de layouts
 ############################
@@ -306,7 +292,7 @@ done
 ###  PS1 do MONIT
 # \[\e]0;\u@\h: \w\a\]\[\e]0; EmparkMinit - \u@\h: \w\a\][\[\e[1;34m\]\u@\H\[\e[1;33m\] -- [ emp-monit01 ] - Empark Graylog 01 Server -- \[\e[0m\] \w]\n\$
 
-#  ssh -t pm@sanfrancesc "bash --rcfile ~/bashrc_custom -i"
+#  ssh -t pm@sanfrancesc "bash --rcfile ~/.bashrc_custom -ic"
 
 
 
