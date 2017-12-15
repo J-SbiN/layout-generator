@@ -150,7 +150,7 @@ function round_up () {
 #   Recepção de hosts
 #######################
 #----------------------------------------------------------------------------------------------------------------------
-echo -e "\n\n***  Getting Hosts  ***"
+echo -e "\n\n\n***  Getting Hosts  ***"
 echo    "Host file is:   ${HOSTS_FILE}"
 
 CERCA_REGEX=' cerca$'
@@ -184,7 +184,7 @@ echo "Hosts Found:   ${N_ALL}"
 #   Distribuição por ecrãs
 ############################
 #----------------------------------------------------------------------------------------------------------------------
-echo -e "\n\n***  Distributing terminals  ***"
+echo -e "\n\n\n***  Distributing terminals  ***"
 
 N_TPW=${N_ALL}
 N_WIN=0
@@ -209,26 +209,53 @@ echo "$N_WIN windows      $N_TPW terminal/window    ${N_SPW}  terminal-spots/win
 
 
 ############################
-#   Fill Window Spots
+#   Layout Generator
 ############################
 #----------------------------------------------------------------------------------------------------------------------
-echo -e "\n\n***  Filling Windows Spots  ***"
+echo -e "\n\n\n***  Filling Windows Spots  ***"
 BASE_FILE="${BIN_DIR}/generated_layouts/base"
+HOSTS=($(echo ${ALL_PARKS}))
+ADD=""
 
 for X in $(seq 1 1 ${N_WIN})
 do
-    echo -e "\nWin $X"
-    WIN_FILE="${BASE_FILE}_${X}"
-    cat "${BIN_DIR}/layout_templates/${N_SPW}" | sed -r 's/(child)([0-9]+)/\1'${ADD}'\2/g' | sed -r 's/(terminal)([0-9]+)/\1'${ADD}'\2/g'  >  ${WIN_FILE}
+        echo -e "\nWin $X"
+        WIN_FILE="${BASE_FILE}_${X}"
+        cat "${BIN_DIR}/layout_templates/${N_SPW}" | sed -r 's/(child)([0-9]+)/\1'${ADD}'\2/g' | sed -r 's/(terminal)([0-9]+)/\1'${ADD}'\2/g'  >  ${WIN_FILE}
 
-    for Y in $( seq $((N_TPW*X)) 1 $(( N_TPW*(X+1) )) )
-    do
-        echo "$Y"
-    done
+        for Y in $(   seq  $(( N_TPW*(X-1) ))  1  $(( N_TPW*X -1 ))  )
+        do
+                LINE1="      ssh -t pm@${HOSTS[${Y}]} 'bash --rcfile ~\/.bashrc_custom -i'"
+                LINE2="      group = "
+                sed -i -r "/\[\[\[terminal_*[0-9]*\]\]\]/{ N;  0,/^ *\[\[\[terminal_*[0-9]*\]\]\].*\n^ *order = [0-9]*.*/  { s/(^ *\[\[\[terminal_*[0-9]*\]\]\].*)\n(^ *order = [0-9]*.*)/\1\n${LINE1}\n${LINE2}\n\2/} }" "${WIN_FILE}"
+        done
+        ADD+="_"
 done
 #----------------------------------------------------------------------------------------------------------------------
-#   Fill Window Spots
+#   Layout Generator
 ############################
+
+##  O que será que acontece qd há mais que um preenchimento do mesmo template e os ids dos terminais ficam repetidos?
+##  Os ids são necessários?
+
+
+
+
+
+
+
+############################
+#   Concatenate 
+############################
+#----------------------------------------------------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------------------------------------------------
+#   Concatenate
+############################
+
+
+
+
 
 
 
@@ -237,28 +264,6 @@ exit 0
 
 
 
-############################
-#   Gerador de layouts
-############################
-#----------------------------------------------------------------------------------------------------------------------
-#BASE_FILE="/dev/null"
-BASE_FILE="${BIN_DIR}/generated_layouts/base"
-FILE_HEADER="${BIN_DIR}/layout_templates/header"
-
-# Inicial header
-cat "${FILE_HEADER}" > "${BASE_FILE}"
-
-ADD=""
-for X in $(seq 1 1 ${N_WIN})
-do
-        #BASE_N="${BASE_FILE}_${X}"
-        cat "${BIN_DIR}/layout_templates/${N_BLANKS}" | sed -r 's/(child)([0-9]+)/\1'${ADD}'\2/g' | sed -r 's/(terminal)([0-9]+)/\1'${ADD}'\2/g'  >>  ${BASE_FILE}
-        ADD+="_"
-done
-
-#----------------------------------------------------------------------------------------------------------------------
-#   Gerador de layouts
-############################
 
 
 
@@ -268,45 +273,18 @@ done
 
 
 
-
-
-
-############################
-#   Atribuir Comandos
-############################
-#----------------------------------------------------------------------------------------------------------------------
-
-
-
-#----------------------------------------------------------------------------------------------------------------------
-#   Atribuir Comandos
-############################
-
-
-#cp "${GROUPS_FILE}" "${GROUPS_FILE}.old_${DATE}"
-#sed -i "/^ *hostgroup_name *${PK_TYPE}$/{n;{n;s/$/,${PK_NAME}/}}" "${GROUPS_FILE}"
 
 
 
 
 
 ### Alterar o titulo do terminal
-# ORIG=$PS1; TITLE="\e]2;\"O que me apetecer\"\a"; PS1=${ORIG}${TITLE}
-#
-
-
-#  ssh -t pm@sanfrancesc "bash --rcfile ~/bashrc_custom -i"
-
-
 ###  PS1 do MONIT
 # \[\e]0;\u@\h: \w\a\]\[\e]0; EmparkMinit - \u@\h: \w\a\][\[\e[1;34m\]\u@\H\[\e[1;33m\] -- [ emp-monit01 ] - Empark Graylog 01 Server -- \[\e[0m\] \w]\n\$
 
-#  ssh -t pm@sanfrancesc "bash --rcfile ~/.bashrc_custom -ic"
-
-
-
-
-
+### No .bashrc_custom dos parques (ramblanova)
+#source .bashrc
+#PS1="\e[1m\[\e]0;\u@\h: \w\a\]\u@\h [ramblanova]: \w $ ";
 
 
 

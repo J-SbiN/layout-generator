@@ -9,144 +9,154 @@
       size = 1920, 1054
       title = jsabino@PM-JSabino ~
       type = Window
-    [[[child1]]]
-      order = 0
-      parent = child0
-      position = 524
-      ratio = 0.5
-      type = VPaned
-    [[[child10]]]
-      order = 1
-      parent = child8
-      position = 626
-      ratio = 0.483102918587
-      type = HPaned
-    [[[child13]]]
-      order = 1
-      parent = child1
-      position = 259
-      ratio = 0.5
-      type = VPaned
-    [[[child14]]]
-      order = 0
-      parent = child13
-      position = 612
-      ratio = 0.3203125
-      type = HPaned
-    [[[child16]]]
-      order = 1
-      parent = child14
-      position = 627
-      ratio = 0.483870967742
-      type = HPaned
-    [[[child19]]]
-      order = 1
-      parent = child13
-      position = 615
-      ratio = 0.321875
-      type = HPaned
-    [[[child2]]]
-      order = 0
-      parent = child1
-      position = 259
-      ratio = 0.5
-      type = VPaned
-    [[[child21]]]
-      order = 1
-      parent = child19
-      position = 627
-      ratio = 0.484988452656
-      type = HPaned
-    [[[child3]]]
-      order = 0
-      parent = child2
-      position = 615
-      ratio = 0.321875
-      type = HPaned
-    [[[child5]]]
-      order = 1
-      parent = child3
-      position = 621
-      ratio = 0.480369515012
-      type = HPaned
-    [[[child8]]]
-      order = 1
-      parent = child2
-      position = 612
-      ratio = 0.3203125
-      type = HPaned
-    [[[terminal11]]]
-      order = 0
-      parent = child10
-      profile = default
-      type = Terminal
-      uuid = 76e6dcec-c447-4508-ba7e-9aa890565605
-    [[[terminal12]]]
-      order = 1
-      parent = child10
-      profile = default
-      type = Terminal
-      uuid = 74a75a93-4509-4dcb-b7eb-4acefbdc70dd
-    [[[terminal15]]]
-      order = 0
-      parent = child14
-      profile = default
-      type = Terminal
-      uuid = 1ec46d51-ef4f-41bb-b362-303d36378cde
-    [[[terminal17]]]
-      order = 0
-      parent = child16
-      profile = default
-      type = Terminal
-      uuid = c759c017-e14a-4c7f-ac62-bb199071fe55
-    [[[terminal18]]]
-      order = 1
-      parent = child16
-      profile = default
-      type = Terminal
-      uuid = 13e28efc-670d-40d1-9af3-8fdb2c06d902
-    [[[terminal20]]]
-      order = 0
-      parent = child19
-      profile = default
-      type = Terminal
-      uuid = a2a502be-14da-4304-8702-a07107df80c4
-    [[[terminal22]]]
-      order = 0
-      parent = child21
-      profile = default
-      type = Terminal
-      uuid = 3da0c90f-0e26-4f80-9544-1aa0047d70d0
-    [[[terminal23]]]
-      order = 1
-      parent = child21
-      profile = default
-      type = Terminal
-      uuid = b3b8588a-a4e1-4dab-be3f-9624f4717206
-    [[[terminal4]]]
-      order = 0
-      parent = child3
-      profile = default
-      type = Terminal
-      uuid = 5c775dea-813e-45c6-ad96-6ffc9eb95cc4
-    [[[terminal6]]]
-      order = 0
-      parent = child5
-      profile = default
-      type = Terminal
-      uuid = aa20c16f-b851-4a20-a4d0-f0757944f646
-    [[[terminal7]]]
-      order = 1
-      parent = child5
-      profile = default
-      type = Terminal
-      uuid = e119aabe-780c-48aa-8ad8-1293aaa225fe
-    [[[terminal9]]]
-      order = 0
-      parent = child8
-      profile = default
-      type = Terminal
-      uuid = c624b9fa-76e7-454b-967e-b9345a660cae
+          [[[child1]]]
+            order = 0
+            parent = child0
+            position = 524
+            ratio = 0.5
+            type = VPaned
+                [[[child2]]]
+                  order = 0
+                  parent = child1
+                  position = 259
+                  ratio = 0.5
+                  type = VPaned
+                      [[[child3]]]
+                        order = 0
+                        parent = child2
+                        position = 615
+                        ratio = 0.321875
+                        type = HPaned
+                            [[[child5]]]
+                              order = 1
+                              parent = child3
+                              position = 621
+                              ratio = 0.480369515012
+                              type = HPaned
+                      [[[child8]]]
+                        order = 1
+                        parent = child2
+                        position = 612
+                        ratio = 0.3203125
+                        type = HPaned
+                            [[[child10]]]
+                              order = 1
+                              parent = child8
+                              position = 626
+                              ratio = 0.483102918587
+                              type = HPaned
+                [[[child13]]]
+                  order = 1
+                  parent = child1
+                  position = 259
+                  ratio = 0.5
+                  type = VPaned
+                      [[[child14]]]
+                        order = 0
+                        parent = child13
+                        position = 612
+                        ratio = 0.3203125
+                        type = HPaned
+                            [[[child16]]]
+                              order = 1
+                              parent = child14
+                              position = 627
+                              ratio = 0.483870967742
+                              type = HPaned
+                      [[[child19]]]
+                        order = 1
+                        parent = child13
+                        position = 615
+                        ratio = 0.321875
+                        type = HPaned
+                            [[[child21]]]
+                              order = 1
+                              parent = child19
+                              position = 627
+                              ratio = 0.484988452656
+                              type = HPaned
+
+
+
+          [[[terminal4]]]
+            order = 0
+            parent = child3
+            profile = default
+            type = Terminal
+            uuid = 5c775dea-813e-45c6-ad96-6ffc9eb95cc4
+
+          [[[terminal6]]]
+            order = 0
+            parent = child5
+            profile = default
+            type = Terminal
+            uuid = aa20c16f-b851-4a20-a4d0-f0757944f646
+          [[[terminal7]]]
+            order = 1
+            parent = child5
+            profile = default
+            type = Terminal
+            uuid = e119aabe-780c-48aa-8ad8-1293aaa225fe
+
+          [[[terminal9]]]
+            order = 0
+            parent = child8
+            profile = default
+            type = Terminal
+            uuid = c624b9fa-76e7-454b-967e-b9345a660cae
+
+          [[[terminal11]]]
+            order = 0
+            parent = child10
+            profile = default
+            type = Terminal
+            uuid = 76e6dcec-c447-4508-ba7e-9aa890565605
+          [[[terminal12]]]
+            order = 1
+            parent = child10
+            profile = default
+            type = Terminal
+            uuid = 74a75a93-4509-4dcb-b7eb-4acefbdc70dd
+
+          [[[terminal15]]]
+            order = 0
+            parent = child14
+            profile = default
+            type = Terminal
+            uuid = 1ec46d51-ef4f-41bb-b362-303d36378cde
+
+          [[[terminal17]]]
+            order = 0
+            parent = child16
+            profile = default
+            type = Terminal
+            uuid = c759c017-e14a-4c7f-ac62-bb199071fe55
+          [[[terminal18]]]
+            order = 1
+            parent = child16
+            profile = default
+            type = Terminal
+            uuid = 13e28efc-670d-40d1-9af3-8fdb2c06d902
+
+          [[[terminal20]]]
+            order = 0
+            parent = child19
+            profile = default
+            type = Terminal
+            uuid = a2a502be-14da-4304-8702-a07107df80c4
+
+          [[[terminal22]]]
+            order = 0
+            parent = child21
+            profile = default
+            type = Terminal
+            uuid = 3da0c90f-0e26-4f80-9544-1aa0047d70d0
+          [[[terminal23]]]
+            order = 1
+            parent = child21
+            profile = default
+            type = Terminal
+            uuid = b3b8588a-a4e1-4dab-be3f-9624f4717206
 
 
 
