@@ -1,8 +1,15 @@
 
+# swap files
+*.swp
 
 # Outputs of the scripts
 generated_layouts/
 testes/*
 
+# Test and output files
+testing/
+test_hosts
+
 # doodles file
+scrach.sh
 

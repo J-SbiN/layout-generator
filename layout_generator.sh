@@ -38,11 +38,11 @@ BIN_DIR="$(readlink -f $(dirname ${BASH_SOURCE[0]}))"
 CONFIGS_FOLDER="/home/jsabino/.config/terminator/configs"
 ETC_HOSTS="/etc/hosts"
 NEW_FILE="config_${DATE}"
-N_SCREENS=2
-MAX_TPW=20
+N_SCREENS=2     # to become an option
+MAX_TPW=20      
 
-HOSTS_FILE=${ETC_HOSTS}
-OUT_DIR=${CONFIGS_FOLDER}
+HOSTS_FILE=${ETC_HOSTS}      # to become an option
+OUT_DIR=${CONFIGS_FOLDER}    # to become an option
 #----------------------------------------------------------------------------------------------------------------------
 #   Default Values
 #######################
@@ -55,7 +55,6 @@ OUT_DIR=${CONFIGS_FOLDER}
 
 
 function round_up () {
-
       case $((${1})) in
           1 )  X=1 ;;
           2 )  X=2 ;;
@@ -84,56 +83,56 @@ function round_up () {
 #   MENU
 ################
 #----------------------------------------------------------------------------------------------------------------------
-while :
-do
-    case $1 in
-        -h|-\?|--help)
-            show_help
-            exit
-            ;;
-        -v|--verbose|--debug)
-            set_debug
-            ;;
-        -H|--hosts-file)
-            if [ -n "$2" ]; then
-                HOSTS_FILE=$2
-                shift
-            else
-                echo -e "ERROR: '${1}' requires a non-empty option argument.\n"
-                exit 1
-            fi
-            ;;
-        --hosts-file=?*)
-            HOSTS_FILE=${1#*=} # Delete everything up to "=" and assign the remainder.
-            ;;
-        -o|--out-dir)
-            if [ -n "$2" ]; then
-                OUT_DIR=$2
-                shift
-            else
-                printf 'ERROR: "--out-dir" requires a non-empty option argument.\n' >&2
-                exit 1
-            fi
-            ;;
-        --out-dir=?*)
-            OUT_DIR=${1#*=} # Delete everything up to "=" and assign the remainder.
-            ;;
-        --hosts-file=|--out-dir=)
-            echo "ERROR: '${1}' requires a non-empty option argument.\n"
-            exit 1
-            ;;
-        --)   # End of all options.
+        while :
+        do
+            case $1 in
+                -h|-\?|--help)
+                    show_help
+                    exit
+                    ;;
+                -v|--verbose|--debug)
+                    set_debug
+                    ;;
+                -H|--hosts-file)
+                    if [ -n "$2" ]; then
+                        HOSTS_FILE=$2
+                        shift
+                    else
+                        echo -e "ERROR: '${1}' requires a non-empty option argument.\n"
+                        exit 1
+                    fi
+                    ;;
+                --hosts-file=?*)
+                    HOSTS_FILE=${1#*=} # Delete everything up to "=" and assign the remainder.
+                    ;;
+                -o|--out-dir)
+                    if [ -n "$2" ]; then
+                        OUT_DIR=$2
+                        shift
+                    else
+                        printf 'ERROR: "--out-dir" requires a non-empty option argument.\n' >&2
+                        exit 1
+                    fi
+                    ;;
+                --out-dir=?*)
+                    OUT_DIR=${1#*=} # Delete everything up to "=" and assign the remainder.
+                    ;;
+                --hosts-file=|--out-dir=)
+                    echo "ERROR: '${1}' requires a non-empty option argument.\n"
+                    exit 1
+                    ;;
+                --)   # End of all options.
+                    shift
+                    break
+                    ;;
+                -?*)
+                    printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2
+                    ;;
+                *)               # Default case: If no more options then break out of the loop.
+                    break
+            esac
             shift
-            break
-            ;;
-        -?*)
-            printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2
-            ;;
-        *)               # Default case: If no more options then break out of the loop.
-            break
-    esac
-    shift
-done
+        done
 #----------------------------------------------------------------------------------------------------------------------
 #   MENU
 ################
@@ -151,7 +150,8 @@ done
 #   Recepção de hosts
 #######################
 #----------------------------------------------------------------------------------------------------------------------
-echo -e "Host file is:\t${HOSTS_FILE}"
+echo -e "\n\n\n***  Getting Hosts  ***"
+echo    "Host file is:   ${HOSTS_FILE}"
 
 CERCA_REGEX=' cerca$'
 SAGA_REGEX=' saga$'
@@ -165,6 +165,9 @@ TOTEM=$(cat ${HOSTS_FILE} | grep -E ${TOTEM_REGEX} | grep -Ev ${COMMENT_LINE} | 
 SKIDATA=$(cat ${HOSTS_FILE} | grep -E ${SKI_REGEX} | grep -Ev ${COMMENT_LINE} | sed 's/  */ /g' | cut -d' ' -f2)  || echo "" > /dev/null
 
 ALL_PARKS=$(echo -e "${CERCANIAS}\n${SAGA}\n${TOTEM}\n${SKIDATA}" ) # | sed '/^\s*$/d')
+
+N_ALL=$(echo "${ALL_PARKS}" | wc -l)
+echo "Hosts Found:   ${N_ALL}"
 #----------------------------------------------------------------------------------------------------------------------
 #   Recepção de hosts
 #######################
@@ -181,28 +184,24 @@ ALL_PARKS=$(echo -e "${CERCANIAS}\n${SAGA}\n${TOTEM}\n${SKIDATA}" ) # | sed '/^\
 #   Distribuição por ecrãs
 ############################
 #----------------------------------------------------------------------------------------------------------------------
-N_ALL=$(echo "${ALL_PARKS}" | wc -l)
-N_TPW=${N_ALL}
+echo -e "\n\n\n***  Distributing terminals  ***"
 
-N_WIN=1
+N_TPW=${N_ALL}
+N_WIN=0
 while [ ${N_TPW} -gt ${MAX_TPW} ]   ||   [ ${N_WIN} -lt ${N_SCREENS}  ]
 do
     N_WIN=$((N_WIN+1))
-    #[ $((N_ALL%N_WIN)) -eq 0 ]
-    N_TPW=$((N_ALL/N_WIN +1))
+    N_TPW=$((N_ALL/N_WIN))
+    [ $((N_ALL%N_WIN)) -eq 0 ]  ||  N_TPW=$((N_TPW+1))
 done
-N_BLANKS=$(round_up ${N_TPW})
+
+N_SPW=$(round_up ${N_TPW})
 #----------------------------------------------------------------------------------------------------------------------
 #   Distribuição por ecrãs
 ############################
 
-
-echo "${N_ALL}"
-echo "$N_WIN windows      $N_TPW terminals/window      $N_BLANKS terminal-spots/window"
-#echo "$N_T1 - w1    $N_T2 - w2 "
-
-
-
+echo ""
+echo "$N_WIN windows      $N_TPW terminal/window    ${N_SPW}  terminal-spots/window"
 
 
 
@@ -210,72 +209,59 @@ echo "$N_WIN windows      $N_TPW terminals/window      $N_BLANKS terminal-spots/
 
 
 ############################
-#   Gerador de layouts
+#   Layout Generator
 ############################
 #----------------------------------------------------------------------------------------------------------------------
-#BASE_FILE="/dev/null"
+echo -e "\n\n\n***  Filling Windows Spots  ***"
 BASE_FILE="${BIN_DIR}/generated_layouts/base"
-
-
-# Inicial header
-cat << EOF > "${BASE_FILE}"
-[global_config]
-  suppress_multiple_term_dialog = True
-[keybindings]
-[plugins]
-[profiles]
-  [[default]]
-    background_darkness = 0.9
-    background_image = None
-    background_type = transparent
-    scrollback_infinite = True
-  [[park]]
-    background_image = None
-    scrollback_infinite = True
-[layouts]
-EOF
-
+HOSTS=($(echo ${ALL_PARKS}))
 ADD=""
+
 for X in $(seq 1 1 ${N_WIN})
 do
-cat "${BIN_DIR}/layout_templates/${N_BLANKS}" | sed -r 's/(child)([0-9]+)/\1'${ADD}'\2/g' | sed -r 's/(terminal)([0-9]+)/\1'${ADD}'\2/g'  >>  ${BASE_FILE}
-    ADD+="_"
+        echo -e "\nWin $X"
+        WIN_FILE="${BASE_FILE}_${X}"
+        cat "${BIN_DIR}/layout_templates/${N_SPW}" | sed -r 's/(child)([0-9]+)/\1'${ADD}'\2/g' | sed -r 's/(terminal)([0-9]+)/\1'${ADD}'\2/g'  >  ${WIN_FILE}
+
+        for Y in $(   seq  $(( N_TPW*(X-1) ))  1  $(( N_TPW*X -1 ))  )
+        do
+                LINE1="      ssh -t pm@${HOSTS[${Y}]} 'bash --rcfile ~\/.bashrc_custom -i'"
+                LINE2="      group = "
+                sed -i -r "/\[\[\[terminal_*[0-9]*\]\]\]/{ N;  0,/^ *\[\[\[terminal_*[0-9]*\]\]\].*\n^ *order = [0-9]*.*/  { s/(^ *\[\[\[terminal_*[0-9]*\]\]\].*)\n(^ *order = [0-9]*.*)/\1\n${LINE1}\n${LINE2}\n\2/} }" "${WIN_FILE}"
+        done
+        ADD+="_"
 done
 #----------------------------------------------------------------------------------------------------------------------
-#   Gerador de layouts
+#   Layout Generator
+############################
+
+##  O que será que acontece qd há mais que um preenchimento do mesmo template e os ids dos terminais ficam repetidos?
+##  Os ids são necessários?
+
+
+
+
+
+
+
+############################
+#   Concatenate 
+############################
+#----------------------------------------------------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------------------------------------------------
+#   Concatenate
 ############################
 
 
 
 
 
-#cat << EOF > "${BASE_FILE}"
-#    [[[child${ADD}0]]]
-#      fullscreen = False
-#      last_active_window = True
-#      maximised = True
-#      order = 0
-#      parent = ""
-#      position = 1920:0
-#      size = 1920, 1029
-#      title = 
-#      type = Window
-#EOF
-#
-#    for (( c=1; c<=${N_TPW}; c++ )) #  nr de term na janela <= q nr de term por janela
-#    do
-#        echo "$X  $c"
-#    done
 
 
 
+exit 0
 
-
-
-
-
-#[ $((N_ALL%2)) -eq 0 ]   &&   { N1=$((N_ALL/2)); N2=$((N1)); }  ||  { N1=$((N_ALL/2)); N2=$((N1+1)); }
-#echo "${N1}  ${N2}"
 
 
 
@@ -293,25 +279,40 @@ done
 
 
 ### Alterar o titulo do terminal
-# ORIG=$PS1; TITLE="\e]2;\"O que me apetecer\"\a"; PS1=${ORIG}${TITLE}
-#
-
-
-#  ssh -t pm@sanfrancesc "bash --rcfile ~/bashrc_custom -i"
-
-
-
-
-
 ###  PS1 do MONIT
 # \[\e]0;\u@\h: \w\a\]\[\e]0; EmparkMinit - \u@\h: \w\a\][\[\e[1;34m\]\u@\H\[\e[1;33m\] -- [ emp-monit01 ] - Empark Graylog 01 Server -- \[\e[0m\] \w]\n\$
 
-#  ssh -t pm@sanfrancesc "bash --rcfile ~/bashrc_custom -i"
+### No .bashrc_custom dos parques (ramblanova)
+#source .bashrc
+#PS1="\e[1m\[\e]0;\u@\h: \w\a\]\u@\h [ramblanova]: \w $ ";
 
 
 
 
 
+
+
+###############################
+#   Switch terminator config
+################################
+#
+#DIRECTORY="/home/jsabino/.config/terminator"
+#ORIG_FILE="config"
+#SAFE_FILE="config.temp.bak"
+#
+#
+#X=$1
+#
+#cp  "${DIRECTORY}"/"${ORIG_FILE}" "${DIRECTORY}"/"${SAFE_FILE}"
+#
+#echo "bué da cenas" > "${DIRECTORY}"/"${ORIG_FILE}"
+#
+#terminator -l ${X}
+#
+#cp "${DIRECTORY}"/"${SAFE_FILE}" "${DIRECTORY}"/"${ORIG_FILE}"
+#
+#rm "${DIRECTORY}"/"${SAFE_FILE}"
+#
 
 
 

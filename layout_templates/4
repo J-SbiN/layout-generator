@@ -1,4 +1,3 @@
-
     [[[child0]]]
       fullscreen = False
       last_active_term = 7050b14b-047b-46f5-9e58-a6aadd931e31
@@ -56,4 +55,9 @@
       profile = default
       type = Terminal
       uuid = f4bb239f-5caa-4cd9-a123-5219e65dc92d
+
+
+
+
+
 

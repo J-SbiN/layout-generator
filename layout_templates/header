@@ -1,14 +1,6 @@
 [global_config]
   suppress_multiple_term_dialog = True
 [keybindings]
-[layouts]
-  [[default]]
-    [[[child1]]]
-      parent = window0
-      type = Terminal
-    [[[window0]]]
-      parent = ""
-      type = Window
 [plugins]
 [profiles]
   [[default]]
@@ -18,5 +10,10 @@
     scrollback_infinite = True
   [[park]]
     background_image = None
-    scrollback_infinite = True
 
+
+
+
+
+[layouts]
+  [[default]]

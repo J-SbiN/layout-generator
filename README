@@ -6,8 +6,20 @@ A script to start multiple terminals on diferent hosts according to a hosts file
 
 
 
-Ideas:
-Set number of windows using number of screens.
+IDEAS:
+Reject repeated hosts 
 Set de PS1 of each park with the name from the hostsfile
-Group terminals by park tipology
+Set groups according to windows
+Set groups according to host tipology
+Group terminals by park tipology (~ kinda done)
+
+
+
+
+
+
+HISTORY:
+
+2017/12/13    Set number of windows, terminals, and terminal-spots using number of screens and hosts.
+2017/12/15    Distribute hosts accross windows
 
