@@ -22,4 +22,4 @@ HISTORY:
 
 2017/12/13    Set number of windows, terminals, and terminal-spots using number of screens and hosts.
 2017/12/15    Distribute hosts accross windows
-
+2017/12/17    Generates full layout file. Switches terminator config, executes and switches it back.

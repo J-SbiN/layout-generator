@@ -6,6 +6,7 @@
 generated_layouts/
 
 # Test and output files
+tests/
 testing/
 test_hosts
 
