@@ -4,11 +4,12 @@
 
 # Outputs of the scripts
 generated_layouts/
-testes/*
 
 # Test and output files
+tests/
 testing/
 test_hosts
+hosts
 
 # doodles file
 scrach.sh
