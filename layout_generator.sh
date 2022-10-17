@@ -4,7 +4,7 @@ set -eo pipefail
 
 
 function show_help {
-    echo -e "\n\t\t usage: <layout_generator.sh> <-H /path/to/hosts/file> [-v]\n"
+    echo -e "\n\t\t usage: ${0} <-H /path/to/hosts/file> [-v]\n"
     exit 0
 }
 
@@ -167,7 +167,8 @@ SKIDATA=$(cat ${HOSTS_FILE} | grep -E ${SKI_REGEX} | grep -Ev ${COMMENT_LINE} | 
 ALL_PARKS=$(echo -e "${CERCANIAS}\n${SAGA}\n${TOTEM}\n${SKIDATA}" ) # | sed '/^\s*$/d')
 
 N_ALL=$(echo "${ALL_PARKS}" | wc -l)
-echo "Hosts Found:   ${N_ALL}"
+echo "Found ${N_ALL} hosts:"
+echo "${ALL_PARKS}"
 #----------------------------------------------------------------------------------------------------------------------
 #   Recepção de hosts
 #######################
@@ -209,7 +210,7 @@ echo "$N_WIN windows      $N_TPW terminal/window    ${N_SPW}  terminal-spots/win
 
 
 ############################
-#   Layout Generator
+#   Generate Layout
 ############################
 #----------------------------------------------------------------------------------------------------------------------
 echo -e "\n\n\n***  Filling Windows Spots  ***"
@@ -225,22 +226,28 @@ do
 
         for Y in $(   seq  $(( N_TPW*(X-1) ))  1  $(( N_TPW*X -1 ))  )
         do
-                LINE1="      ssh -t pm@${HOSTS[${Y}]} 'bash --rcfile ~\/.bashrc_custom -i'"
+                LINE1="      command = ssh -t pm@${HOSTS[${Y}]} 'bash --rcfile ~\/.bashrc_custom -i'"
                 LINE2="      group = "
                 sed -i -r "/\[\[\[terminal_*[0-9]*\]\]\]/{ N;  0,/^ *\[\[\[terminal_*[0-9]*\]\]\].*\n^ *order = [0-9]*.*/  { s/(^ *\[\[\[terminal_*[0-9]*\]\]\].*)\n(^ *order = [0-9]*.*)/\1\n${LINE1}\n${LINE2}\n\2/} }" "${WIN_FILE}"
         done
         ADD+="_"
 done
 #----------------------------------------------------------------------------------------------------------------------
-#   Layout Generator
+#   Generate Layout
 ############################
 
 ##  O que será que acontece qd há mais que um preenchimento do mesmo template e os ids dos terminais ficam repetidos?
 ##  Os ids são necessários?
 
 
-
-
+############################
+#   Generate Header
+############################
+#----------------------------------------------------------------------------------------------------------------------
+LAYOUT_NAME=""
+#----------------------------------------------------------------------------------------------------------------------
+#   Generate Header
+############################
 
 
 
@@ -248,6 +255,16 @@ done
 #   Concatenate 
 ############################
 #----------------------------------------------------------------------------------------------------------------------
+HEADER="${BIN_DIR}/layout_templates/header"
+OUT="${BIN_DIR}/generated_layouts/config"
+
+cat "${HEADER}" > "${OUT}"
+
+for X in $(seq 1 1 ${N_WIN})
+do
+        WIN_FILE="${BASE_FILE}_${X}"
+        cat "${WIN_FILE}" >> "${OUT}"
+done
 
 #----------------------------------------------------------------------------------------------------------------------
 #   Concatenate
@@ -260,18 +277,30 @@ done
 
 
 
-exit 0
 
 
+################################
+#   Switch terminator Config
+################################
+#----------------------------------------------------------------------------------------------------------------------
+DIRECTORY="/home/jsabino/.config/terminator"
+LAYOUT_FILE="${OUT}"
+ORIG_FILE="config"
+SAFE_FILE="config.temp.bak"
+LAYOUT_NAME="default"
 
+cp  "${DIRECTORY}/${ORIG_FILE}" "${DIRECTORY}/${SAFE_FILE}"
 
+cat "${LAYOUT_FILE}" > "${DIRECTORY}/${ORIG_FILE}"
 
+terminator 
 
+cp "${DIRECTORY}/${SAFE_FILE}" "${DIRECTORY}/${ORIG_FILE}"
 
-
-
-
-
+rm "${DIRECTORY}/${SAFE_FILE}"
+#----------------------------------------------------------------------------------------------------------------------
+#   Switch terminator Config
+################################
 
 
 
@@ -285,34 +314,4 @@ exit 0
 ### No .bashrc_custom dos parques (ramblanova)
 #source .bashrc
 #PS1="\e[1m\[\e]0;\u@\h: \w\a\]\u@\h [ramblanova]: \w $ ";
-
-
-
-
-
-
-
-###############################
-#   Switch terminator config
-################################
-#
-#DIRECTORY="/home/jsabino/.config/terminator"
-#ORIG_FILE="config"
-#SAFE_FILE="config.temp.bak"
-#
-#
-#X=$1
-#
-#cp  "${DIRECTORY}"/"${ORIG_FILE}" "${DIRECTORY}"/"${SAFE_FILE}"
-#
-#echo "bué da cenas" > "${DIRECTORY}"/"${ORIG_FILE}"
-#
-#terminator -l ${X}
-#
-#cp "${DIRECTORY}"/"${SAFE_FILE}" "${DIRECTORY}"/"${ORIG_FILE}"
-#
-#rm "${DIRECTORY}"/"${SAFE_FILE}"
-#
-
-
 

@@ -12,7 +12,7 @@ Set de PS1 of each park with the name from the hostsfile
 Set groups according to windows
 Set groups according to host tipology
 Group terminals by park tipology (~ kinda done)
-
+Set command to execute in each host
 
 
 
@@ -22,4 +22,4 @@ HISTORY:
 
 2017/12/13    Set number of windows, terminals, and terminal-spots using number of screens and hosts.
 2017/12/15    Distribute hosts accross windows
-
+2017/12/17    Generates full layout file. Switches terminator config, executes and switches it back.
